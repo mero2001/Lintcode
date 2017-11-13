@@ -1,0 +1,59 @@
+//Anagram Function
+//写出一个函数 anagram(s, t) 判断两个字符串是否可以通过改变字母的顺序变成一样的字符串。
+
+public class Solution {
+    /**
+     * @param s: The first string
+     * @param b: The second string
+     * @return true or false
+     */
+    public boolean anagram(String s, String t) {
+        // write your code here
+        if(s.length()!=t.length()){
+            return false;
+        }
+        
+        Map sMap=new HashMap<Character,Integer>();
+        Map tMap=new HashMap<Character,Integer>();
+        
+        // for(char i='a';i<='z';i++){
+        //     sMap.put(i,0);
+        //     tMap.put(i,0);
+        // }
+        
+        // for(char i='A';i<='Z';i++){
+        //     sMap.put(i,0);
+        //     tMap.put(i,0);
+        // }
+        
+        char[] chs=s.toCharArray();
+        char[] cht=t.toCharArray();
+        
+        for(char ch:chs){
+            if(sMap.containsKey(ch)){
+                Integer i=(Integer)sMap.get(ch);
+                i++;
+                sMap.put(ch,i);
+            }else{
+                sMap.put(ch,1);
+            }
+        }
+        
+        for(char ch:cht){
+            if(tMap.containsKey(ch)){
+                Integer i=(Integer)tMap.get(ch);
+                i++;
+                tMap.put(ch,i);
+            }else{
+                tMap.put(ch,1);
+            }
+        }
+        
+        if(!sMap.equals(tMap)){
+            return false;
+        }
+        
+        return true;
+        
+    }
+};
