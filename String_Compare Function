@@ -1,0 +1,64 @@
+//比较两个字符串A和B，确定A中是否包含B中所有的字符。字符串A和B中的字符都是 大写字母
+//样例
+//给出 A = "ABCD" B = "ACD"，返回 true
+//给出 A = "ABCD" B = "AABC"， 返回 false
+public class Solution {
+    /*
+     * @param A: A string
+     * @param B: A string
+     * @return: if string A contains all of the characters in B return true else return false
+     */
+    public boolean compareStrings(String A, String B) {
+        // write your code here
+        char[] chA=A.toCharArray();
+        char[] chB=B.toCharArray();
+        
+        Map Amap=new HashMap<Character,Integer>();
+        Map Bmap=new HashMap<Character,Integer>();
+        
+        /*for(char i='A';i<='Z';i++){
+            Amap.put(i,0);
+            Bmap.put(i,0);
+        }*/
+        
+        for(char ch:chB){
+            if(Bmap.containsKey(ch)){
+                Integer i=(Integer)Bmap.get(ch);
+                i++;
+                Bmap.put(ch,i);
+            }else{
+                Bmap.put(ch,1);
+            }
+        }
+        
+        for(char ch:chA){
+            if(Amap.containsKey(ch)){
+                Integer i=(Integer)Amap.get(ch);
+                i++;
+                Amap.put(ch,i);
+            }else{
+                Amap.put(ch,1);
+            }
+        }
+        
+        if(Bmap.size()>Amap.size()){
+            return false;
+        }
+        
+        Iterator iter=Bmap.entrySet().iterator();
+        while(iter.hasNext()){
+            Map.Entry entry=(Map.Entry) iter.next();
+            Character key=(Character)entry.getKey();
+            Integer value=(Integer)entry.getValue();
+            if(!Amap.containsKey(key)){
+                return false;
+            }
+            if((Integer)Amap.get(key)<value){
+                return false;
+            }
+        }
+        return true;
+        
+        
+    }
+}
