@@ -1,0 +1,75 @@
+//乱序字符串 
+public class Solution {
+    /*
+     * @param strs: A list of strings
+     * @return: A list of strings
+     */
+    public static List<String> anagrams(String[] strs) {
+       // write your code here
+		List<String> reList=new ArrayList();//创建返回List
+		Map<String,Integer> anaMap=new HashMap<String,Integer>();//创建anaMap
+		for(int i=0;i<strs.length;i++) {//将strs转换为HashMap，并存放在anaMap中
+			if(anaMap.containsKey(strs[i])) {
+				int num=anaMap.get(strs[i]);
+				num++;
+				anaMap.put(strs[i], num);
+			}else {
+				anaMap.put(strs[i], 1);
+			}
+		}
+		Map<String,Integer> anaCodeMap=new HashMap<String,Integer>();
+		for(int i=0;i<strs.length;i++) {
+			if(!anaCodeMap.containsKey(strs[i])) {
+				int num=Anacode(strs[i]);
+				anaCodeMap.put(strs[i], num);
+			}
+		}
+		
+		List<String> anaList=new ArrayList();//创建过渡List
+		for(int i=0;i<strs.length;i++) {
+			for(int j=i+1;j<strs.length;j++) {
+				int numi=anaCodeMap.get(strs[i]);
+				int numj=anaCodeMap.get(strs[j]);
+				if(numi==numj) {
+					anaList.add(strs[i]);
+					anaList.add(strs[j]);
+				}
+			}
+		}
+		
+		Set<String> anaSet=new HashSet(anaList);
+		anaList.clear();
+		anaList.addAll(anaSet);
+		
+		for(int i=0;i<anaList.size();i++) {
+			int num=anaMap.get(anaList.get(i));
+			for(int j=0;j<num;j++) {
+				reList.add(anaList.get(i));
+			}
+		}
+		return reList;
+	}
+	
+	
+	public static int Anacode(String s) {
+		Map<Character,Integer> azMap=new HashMap<Character,Integer>();
+		int n=35;
+		for(char i='a';i<='z';i++) {
+			azMap.put(i, n);
+			n=n+2;
+		}
+		
+		char[] str=s.toCharArray();
+		double anaNum1=0.0;
+		for(char ch:str) {
+			int j=azMap.get(ch);
+			double num=Math.pow(j, 0.07);
+			anaNum1+=num;
+		}
+		
+		int anaNum=(int) (anaNum1*10000000);
+		
+		return anaNum;
+	}
+
+}
