@@ -1,0 +1,75 @@
+List<List<String>> list2d =preFix(strs);
+		
+		int num=list2d.size();
+		if(num==0){
+		    return "";
+		}
+		
+		int length=list2d.get(0).size();
+		if(length==0){
+		    return "";
+		}
+		String longestCommonPre="";
+		int i=length-1;
+		if(num==1) {
+		    longestCommonPre=list2d.get(0).get(length-1);
+			return longestCommonPre;
+		}
+		outer2:
+		for(i=length-1;i>=0;i--) {
+			outer:
+			for(int n=0;n<num;n++) {
+				for(int m=1;m<num;m++) {
+					String strN=(String) list2d.get(n).get(i);
+					String strM=(String) list2d.get(m).get(i);
+					if(n!=m&&!strN.equals(strM)) {
+						//longestCommonPre=strN;
+						break outer;
+					}
+					if((m==num-1)&&strN.equals(strM)) {
+						longestCommonPre=strN;
+						break outer2;
+					}
+				}
+			}
+		}
+		return longestCommonPre;
+		
+	}
+
+
+
+public static List<List<String>> preFix(String[] A){
+	
+	List<List<String>> list2d=new ArrayList<List<String>>();
+	
+	int num=A.length;
+	if(num==0){
+	    list2d.add(new ArrayList<String>());
+	    list2d.get(0).add("");
+	    return list2d;
+	}
+	
+	int min=A[0].length();
+	
+	
+	  
+	
+	for(int i=0;i<num;i++) {
+		int length=A[i].length();
+		if(length<min) {
+			min=length;
+		}
+	}
+	
+	for(int i=0;i<num;i++) { 
+		list2d.add(new ArrayList<String>());
+		for(int j=1;j<min+1;j++) {
+			String str=A[i].substring(0, j);
+			list2d.get(i).add(str);
+		}
+	}
+	
+	return list2d;
+}
+}
