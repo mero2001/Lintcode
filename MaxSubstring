@@ -1,0 +1,54 @@
+public class Solution {
+    /*
+     * @param A: A string
+     * @param B: A string
+     * @return: the length of the longest common substring.
+     */
+    public int longestCommonSubstring(String A, String B) {
+        // write your code here
+        int maxLen=0;
+		List<String> listA=subStrings(A);
+		List<String> listB=subStrings(B);
+		
+		int lenA=listA.size();
+		int lenB=listB.size();
+		
+		
+		for(int i=0;i<lenA;i++) {
+			for(int j=0;j<lenB;j++) {
+				String strA=listA.get(i);
+				String strB=listB.get(j);
+				if(strA.equals(strB)) {
+					if(strA.length()>maxLen) {
+						maxLen=strA.length();
+						break;
+					}
+				}
+				
+			}
+		}
+		return maxLen;
+    }
+	
+	public static List<String> subStrings(String A){
+		
+		A=A.toLowerCase();
+		int len=A.length();
+		
+		List<String> list=new ArrayList<String>();
+		
+		
+		for(int i=0;i<len;i++) {
+			for(int j=i+1;j<=len;j++) {
+				String str=A.substring(i, j);
+				list.add(str);
+			}
+		}
+		Set<String> set=new HashSet(list);
+		list.clear();
+		list.addAll(set);
+		
+		return list;
+		
+	}
+}
