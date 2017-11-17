@@ -1,0 +1,48 @@
+public class Solution {
+    /*
+     * @param nums: A list of integers
+     * @return: A list of integers includes the index of the first number and the index of the last number
+     */
+    public List<Integer> subarraySum(int[] nums) {
+        // write your code here
+        List<Integer> list=new ArrayList<Integer>();//定义返回列表
+		
+		int len=nums.length;//计算nums长度
+		int i;
+		int sum=0;
+		Map<Integer,Integer> map=new HashMap();//定义哈希表，存储nums每个元素的索引和前序数列和
+		for(i=0;i<len;i++) {//给哈希表赋值
+			//sum=0;
+			sum+=nums[i];
+			if(sum==0){//如果前索引序列和为0，直接返回0和i
+			    list.add(0);
+			    list.add(i);
+			    return list;
+			}
+			if(map.containsValue(sum)) {
+				break;
+			}else {//判断前序列和是否在大于零的情况下递增或者在小于0的情况下递减，如此则不添加进map
+			    if((sum-nums[i]>0&&nums[i]>=0)||sum-nums[i]<0&&nums[i]<0){
+			        continue;
+			    }
+				map.put(i, sum);
+			}
+		}
+		
+	
+		Iterator<Map.Entry<Integer, Integer>> iter= map.entrySet().iterator();
+		while(iter.hasNext()) {//遍历map，查找和sum一样的value，并把对应的key添加到返回的list中
+			Map.Entry<Integer, Integer> entry=iter.next();
+			int key=entry.getKey();
+			int value=entry.getValue();
+			if(value==sum&&key!=i) {
+				list.add(key+1);
+				list.add(i);
+				break;
+			}
+		}
+
+		return list;
+	}
+
+}
