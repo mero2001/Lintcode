@@ -1,0 +1,67 @@
+public class Solution {
+    /*
+     * @param numbers: Give an array numbers of n integer
+     * @param target: An integer
+     * @return: return the sum of the three integers, the sum closest target.
+     */
+    public int threeSumClosest(int[] numbers, int target) {
+        // write your code here
+        /*int len=numbers.length;
+        int[] diff=new int[len];
+        int sum=0;
+        
+        for(int i=0;i<len;i++){
+            diff[i]=Math.abs(numbers[i]-target);
+        }
+        for(int i=0;i<3;i++){
+            for(int j=0;j<len-1-i;j++){
+                if(diff[j]<diff[j+1]){
+                    int temp=diff[j];
+                    diff[j]=diff[j+1];
+                    diff[j+1]=temp;
+                }
+                
+            }
+        }
+        boolean flag1=true;
+        boolean flag2=true;
+        boolean flag3=true;
+        
+        System.out.println(Arrays.toString(diff));
+        for(int i=0;i<len;i++){
+            if(flag1&&Math.abs(numbers[i]-target)==diff[len-1]){
+                sum+=numbers[i];
+                flag1=false;
+                continue;
+            }
+            if(flag2&&Math.abs(numbers[i]-target)==diff[len-2]){
+                sum+=numbers[i];
+                flag2=false;
+                continue;
+            }
+            if(flag3&&Math.abs(numbers[i]-target)==diff[len-3]){
+                sum+=numbers[i];
+                flag3=false;
+                continue;
+            }
+        }
+        return sum;
+    }*/
+    int len=numbers.length;
+    
+    int sum=0;
+    int minsum=numbers[0]+numbers[1]+numbers[2];
+    for(int i=0;i<len;i++){
+        for(int j=i+1;j<len;j++){
+            for(int k=j+1;k<len;k++){
+                sum=numbers[i]+numbers[j]+numbers[k];
+                if(Math.abs(sum-target)<Math.abs(minsum-target)){
+                    minsum=sum;
+                }
+            }
+        }
+    }
+    return minsum;
+    }
+    
+}
