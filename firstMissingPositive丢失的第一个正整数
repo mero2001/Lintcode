@@ -1,0 +1,66 @@
+public class Solution {
+    /*
+     * @param A: An array of integers
+     * @return: An integer
+     */
+    public int firstMissingPositive(int[] A) {
+        // write your code here
+
+        int len=A.length;//计算数组长度
+        if(len==0){//数组为空的情况
+            return 1;
+        }
+        int reNum=A[0];
+        /*if(len==1){//数组只有一个数的情况
+            if(A[0]>=0){
+                reNum=A[0]+1;
+                return reNum;
+            }
+        }*/
+        for(int i=0;i<len-1;i++){//对数组进行冒泡排序
+			for(int j=0;j<len-1-i;j++) {
+	            if(A[j]>A[j+1]){
+	                int temp=A[j];
+	                A[j]=A[j+1];
+	                A[j+1]=temp;
+	            }
+			}
+        }
+        //System.out.println(Arrays.toString(A));
+        if(A[len-1]<0){//如果数组最大数小于0，则返回1
+            return 1;
+        }
+        
+        
+        boolean flag=false;
+        for(int i=0;i<len-1;i++){//遍历判断reNum值
+            if(A[i+1]-A[i]>1){
+                if(A[i]>=0){
+                    reNum=A[i]+1;
+                    flag=true;
+                    break;
+                }
+                if(A[i]<0){
+                    if(A[i+1]>1){
+                        reNum=A[i+1]-1;
+                        flag=true;
+                        break;
+                    }
+                    if(A[i+1]<=1){
+                        continue;
+                    }
+                }
+            }
+        }
+        if(flag==false){//如果不存在A[i+1]-A[i]>1，则判断A[0]与1的关系
+            if(A[0]<=1){
+                reNum=A[len-1]+1;
+            }else{
+                reNum=1;
+            }
+            
+        }
+        
+        return reNum;
+    }
+}
