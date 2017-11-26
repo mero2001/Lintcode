@@ -1,0 +1,64 @@
+public class Solution {
+    /*
+     * @param numbers: Give an array numbers of n integer
+     * @return: Find all unique triplets in the array which gives the sum of zero.
+     */
+    public List<List<Integer>> threeSum(int[] numbers) {
+        // write your code here
+        /*Arrays.sort(numbers);//简单粗暴方法一
+        List<List<Integer>> list=new ArrayList<List<Integer>>();
+        int len=numbers.length;
+        int sum=0;
+        for(int i=0;i<len;i++){
+            for(int j=i+1;j<len;j++){
+                for(int k=j+1;k<len;k++){
+                    sum=numbers[i]+numbers[j]+numbers[k];
+                    if(sum==0){
+                        List<Integer> numList=new ArrayList();
+                        numList.add(numbers[i]);
+                        numList.add(numbers[j]);
+                        numList.add(numbers[k]);
+                        if(list.contains(numList)){
+                            continue;
+                        }else{
+                            list.add(numList);
+                        }
+                    }
+                    sum=0;
+                }
+            }
+        }
+        return list;*/
+        Arrays.sort(numbers);//排序
+        List<List<Integer>> list=new ArrayList<List<Integer>>();//定义返回数组
+        int len=numbers.length;//数组长度
+        int sum;//定义和
+        for(int i=0;i<len-2;i++){
+            int j=i+1;//双指针
+            int k=len-1;
+            while(j<k){
+                sum=numbers[i]+numbers[j]+numbers[k];
+                if(sum>0){
+                    k--;//指针左移
+                }else if(sum<0){
+                    j++;//指针右移
+                }else{
+                    List<Integer> numList=new ArrayList();
+                    numList.add(numbers[i]);
+                    numList.add(numbers[j]);
+                    numList.add(numbers[k]);
+                    if(list.contains(numList)){
+                        k--;
+                        j++;
+                        continue;
+                    }else{
+                        list.add(numList);
+                        k--;
+                        j++;
+                    }
+                }
+            }
+        }
+        return list;
+    }
+}
