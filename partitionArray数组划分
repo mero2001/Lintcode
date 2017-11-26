@@ -1,0 +1,77 @@
+public class Solution {
+    /*
+     * @param nums: The integer array you should partition
+     * @param k: An integer
+     * @return: The index after partition
+     */
+    public int partitionArray(int[] nums, int k) {
+        // write your code here
+        /*Arrays.sort(nums);//简单粗暴直接排序
+        int re=0;
+        int len=nums.length;
+        if(len==0){
+            return 0;
+        }
+        if(nums[0]>=k){
+            return 0;
+        }
+        if(nums[len-1]<k){
+            return len;
+        }
+        for(int i=0;i<len;i++){
+            if(nums[i]==k){
+                re=i;
+                return re;
+            }
+        }
+        return re;*/
+        
+        /*int len=nums.length;
+        if(len==0){
+            return 0;
+        }
+        List<Integer> list1=new ArrayList();
+        List<Integer> list2=new ArrayList();
+        for(int i=0;i<len;i++){//比k小的添加到一个数组，比k相等或大于的添加到另一个数组，两个数组合并
+            if(nums[i]<k){
+                list1.add(nums[i]);
+            }else{
+                list2.add(nums[i]);
+            }
+        }
+        int reNum=list1.size();
+        list1.addAll(list2);
+        for(int i=0;i<len;i++){//把数组合并后的元素值赋值给nums数组
+            nums[i]=list1.get(i);
+        }
+        return reNum;*/
+        int len=nums.length;
+        if(len==0){
+            return 0;
+        }
+        if(len==1){
+            if(nums[0]<k){
+                return 1;
+            }
+        }
+        int count=0;
+        for(int i=0;i<len;i++){//冒泡排序，遍历数组，分别与k比较，如果比k小则与数组前面所有元素比较并判断是否交换位置
+            if(nums[i]<k){
+                count++;
+                if(i>=1){
+                for(int j=i-1;j>=0;j--){
+                    if(nums[j]>nums[j+1]){
+                        int temp=nums[j];
+                        nums[j]=nums[j+1];
+                        nums[j+1]=temp;
+                    }
+                }
+                }
+            }
+        }
+        return count;
+        
+        
+        
+    }
+}
