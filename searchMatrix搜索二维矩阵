@@ -1,0 +1,76 @@
+public class Solution {
+    /*
+     * @param matrix: matrix, a list of lists of integers
+     * @param target: An integer
+     * @return: a boolean, indicate whether matrix contains target
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        // write your code here
+        int lenMa=matrix.length;//求矩阵行数
+        if(lenMa==0){//判断矩阵是否为空
+            return false;
+        }
+        int lenLi=matrix[0].length;//求矩阵列数
+        int min=0;//定义min，max，mid和target有可能在的行数
+        int max=lenMa-1;
+        int mid=max/2;
+        int rowNum=0;
+        
+        if(matrix[mid][lenLi-1]<target){//行数为2时，判断target在哪行
+            rowNum=mid+1;
+        }
+        if(matrix[mid][lenLi-1]>target){
+            rowNum=mid;
+        }
+        
+        while(min!=mid){//行数大于2时，二分法找到target所在行
+            if(matrix[mid][0]>target){
+                max=mid;
+                mid=(min+max)/2;
+                //continue;
+            }
+            if(matrix[mid][lenLi-1]<target){
+                min=mid;
+                mid=(mid+max)/2;
+                //continue;
+            }
+            if(matrix[mid][0]==target||matrix[mid][lenLi-1]==target){
+                return true;
+            }
+            if(matrix[mid][0]<target&&matrix[mid][lenLi-1]>target){
+                rowNum=mid;
+                break;
+            }
+            rowNum=mid+1;
+        }
+        
+        //System.out.println(rowNum);
+        
+        int min2=0;//定义每个一维数组的min，max和mid
+        int max2=lenLi-1;
+        int mid2=(max2)/2;
+        /*if(matrix[rowNum][0]==target){
+            return true;
+        }*/
+        if(matrix[rowNum][lenLi-1]==target){//判断最后一个数是否等于target，不判断第一个是因为除法向下取整，min可以等于mid等于0
+            return true;
+        }
+        
+        while(min2!=mid2){//二分法查找目标一维数组中的数
+            if(matrix[rowNum][mid2]>target){
+                max2=mid2;
+                mid2=(min2+max2)/2;
+                //continue;
+            }
+            if(matrix[rowNum][mid2]<target){
+                min2=mid2;
+                mid2=(min2+max2)/2;
+                //continue;
+            }
+            if(matrix[rowNum][mid2]==target){
+                return true;
+            }
+        }
+        return false;
+    }
+}
