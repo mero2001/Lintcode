@@ -1,0 +1,47 @@
+public class Solution {
+    /*
+     * @param A: an integer sorted array
+     * @param target: an integer to be inserted
+     * @return: An integer
+     */
+    public int searchInsert(int[] A, int target) {
+        // write your code here
+        int len=A.length;//计算数组长度
+        if(len==0){//判断数组为0的情况
+            return 0;
+        }
+        if(A[0]>target){//判断数组最小值大于target
+            return 0;
+        }
+        if(A[len-1]<target){//判断数组最大值小于target
+            return len;
+        }
+        if(A[len-1]==target){//判断数组最大值等于target
+            return len-1;
+        }
+        int min=0;//定义最小值、最大值、中值、返回值
+        int max=len-1;
+        int mid=(len-1)/2;
+
+        int reNum=0;
+
+        while(min!=mid){//二分法查找target
+            if(A[mid]>target){
+                max=mid;
+                mid=(min+max)/2;
+            }
+            if(A[mid]<target){
+                min=mid;
+                mid=(min+max)/2;
+            }
+            if(A[mid]==target){
+                return mid;
+            }
+        }
+
+        reNum=min+1;
+        return reNum;
+
+    }
+    
+}
