@@ -1,0 +1,46 @@
+class Solution {
+    /**
+     * @param nums: The integer array.
+     * @param target: Target to find.
+     * @return: The first position of target. Position starts from 0.
+     */
+    public int binarySearch(int[] nums, int target) {
+        //write your code here
+        int len=nums.length;//计算数组长度
+        
+        int min=0;//定义min，max和mid
+        int max=len-1;
+        int mid=(min+max)/2;
+        
+        if(len==0){//判断数组是否为空
+            return -1;
+        }
+        
+        if(nums[len-1]==target){//判断数组最后一个数是否为target
+            return len-1;
+        }
+        
+        while(min!=mid){//二分法查找target
+            if(nums[mid]>target){
+                max=mid;
+                mid=(min+max)/2;
+            }
+            if(nums[mid]<target){
+                min=mid;
+                mid=(min+max)/2;
+            }
+            if(nums[mid]==target){
+                for(int i=min;i<=mid;i++){//在min和mid间查找第一个target出现的索引
+                    if(nums[i]==target){
+                        return i;
+                    }
+                }
+                return mid;
+            }
+        }
+        
+        return -1;
+        
+        
+    }
+}
