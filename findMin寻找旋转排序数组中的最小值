@@ -1,0 +1,39 @@
+public class Solution {
+    /*
+     * @param nums: a rotated sorted array
+     * @return: the minimum number in the array
+     */
+    public int findMin(int[] nums) {
+        // write your code here
+        
+        int len=nums.length;//计算数组长度
+        /*if(len==0){
+            return 0;
+        }*/
+        int start=0;//定义start，end，mid
+        int end=len-1;
+        int mid=(start+end)/2;
+        if(nums[start]<nums[end]){//如果nums是升序排列，直接返回start值
+            return nums[start];
+        }
+        
+        while(start!=mid){//二分法查找最小值
+            if(nums[start]<nums[end]){
+                return nums[start];
+            }
+            if(nums[mid]>nums[end]){
+                start=mid;
+                mid=(start+end)/2;
+            }
+            if(nums[mid]<nums[start]){
+                end=mid;
+                mid=(start+end)/2;
+            }
+            /*if(nums[mid]==nums[start]||nums[mid]==nums[end]){
+                return nums[mid];
+            }*/
+            
+        }
+        return nums[start+1];
+    }
+}
