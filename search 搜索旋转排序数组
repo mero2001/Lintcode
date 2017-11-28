@@ -1,0 +1,74 @@
+public class Solution {
+    /*
+     * @param A: an integer rotated sorted array
+     * @param target: an integer to be searched
+     * @return: an integer
+     */
+    public int search(int[] A, int target) {
+        // write your code here
+        int len=A.length;//计算数组长度
+        if(len==0){//如果len=0，返回-1
+            return -1;
+        }
+        int start=0;//定义start，len，mid
+        int end=len-1;
+        int mid=start+(end-start)/2;
+        if(len==1){//如果len=1，判断target是否等于A[0]
+            if(A[0]==target){
+                return 0;
+            }
+        }
+        if(A[end]==target){//判断A[end]是否等于target
+            return end;
+        }
+        
+        while(start!=mid){//分情况二分法
+            if(A[mid]>A[start]){//先判断mid和start的关系
+                if(target>A[mid]){//判断target和mid的关系
+                    start=mid;
+                    mid=start+(end-start)/2;
+                }
+                if(target<A[mid]){
+                    if(target>A[start]){//判断target和start的关系
+                        end=mid;
+                        mid=start+(end-start)/2;
+                    }
+                    if(target<A[start]){
+                        start=mid;
+                        mid=start+(end-start)/2;
+                    }
+                    if(target==A[start]){
+                        return start;
+                    }
+                    
+                }
+                if(target==A[mid]){
+                    return mid;
+                }
+            }
+            if(A[mid]<A[start]){
+                if(target>A[mid]){
+                    if(target>A[start]){
+                        end=mid;
+                        mid=start+(end-start)/2;
+                    }
+                    if(target<A[start]){
+                        start=mid;
+                        mid=start+(end-start)/2;
+                    }
+                    if(target==A[start]){
+                        return start;
+                    }
+                }
+                if(target<A[mid]){
+                    end=mid;
+                    mid=start+(end-start)/2;
+                }
+                if(target==A[mid]){
+                    return mid;
+                }
+            }
+        }
+        return -1;
+    }
+}
