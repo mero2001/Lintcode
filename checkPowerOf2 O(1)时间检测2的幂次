@@ -1,0 +1,22 @@
+public class Solution {
+    /*
+     * @param n: An integer
+     * @return: True or false
+     */
+    public boolean checkPowerOf2(int n) {
+        // write your code here
+        if(n<0){//把负数变成正数
+            n=n^((int)(Math.pow(-2,31)));
+        }
+
+        int count=0;
+        while(n!=0){//判断二进制数里有多少个1
+            n&=(n-1);
+            count++;
+        }
+        if(count==1){
+            return true;
+        }
+        return false;
+    }
+}
