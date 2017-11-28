@@ -1,0 +1,30 @@
+public class Solution {
+    /*
+     * @param str: An array of char
+     * @param offset: An integer
+     * @return: nothing
+     */
+    public void rotateString(char[] str, int offset) {
+        // write your code here
+        int len=str.length;//计算数组长度
+        if(len==0){//len为0的情况
+            return;
+        }
+        char[] strA=new char[len];//新建数组strA
+        
+        if(offset>len){//当偏移量大于字符串长度时，取余
+            offset=offset%len;
+        }
+        
+        int i;
+        for(i=0;i<offset;i++){
+            strA[i]=str[len-offset+i];
+        }
+        for(int j=i;j<len;j++){
+            strA[j]=str[j-offset];
+        }
+        for(int j=0;j<len;j++){
+            str[j]=strA[j];
+        }
+    }
+}
