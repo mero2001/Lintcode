@@ -1,0 +1,44 @@
+/**
+ * public class SVNRepo {
+ *     public static boolean isBadVersion(int k);
+ * }
+ * you can use SVNRepo.isBadVersion(k) to judge whether 
+ * the kth code version is bad or not.
+*/
+
+public class Solution {
+    /*
+     * @param n: An integer
+     * @return: An integer which is the first bad version.
+     */
+    public int findFirstBadVersion(int n) {
+        // write your code here
+        int start=0;//定义start，end和mid
+        int end=n;
+        int mid=(end-start)/2+start;
+        
+        while(mid!=start){//二分法查找第一个坏版本
+            
+            if(!SVNRepo.isBadVersion(mid)){
+                start=mid;
+                mid=(end-start)/2+start;
+                }
+                //  System.out.println("start:"+start);
+                //  System.out.println("mid:"+mid);
+                //  System.out.println("end:"+end);
+                
+            
+           else{
+                end=mid;
+                mid=(end-start)/2+start;
+                //  System.out.println("start2:"+start);
+                //  System.out.println("mid2:"+mid);
+                //  System.out.println("end2:"+end);
+                }
+            
+            
+        }
+
+        return start+1;
+    }
+}
