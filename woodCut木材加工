@@ -1,0 +1,53 @@
+public class Solution {
+    /*
+     * @param L: Given n pieces of wood with length L[i]
+     * @param k: An integer
+     * @return: The maximum length of the small pieces
+     */
+    public int woodCut(int[] L, int k) {
+        // write your code here
+        int len=L.length;//计算数组长度
+        if(len==0){//数组长度为0时
+            return 0;
+        }
+        Arrays.sort(L);//对数组进行排序
+        List<Integer> list=new ArrayList<Integer>();//定义一个list，存放返回值
+        int min=0;//定义min，max和mid
+        int max=L[len-1];
+        int mid=min+(max-min)/2;
+        int sum=0;//初始化sum=0；
+        
+        while(min!=mid&&mid!=0){
+            for(int i=0;i<len;i++){//计算小段数目
+                sum+=L[i]/mid;
+            }
+            //System.out.println("sum:"+sum);
+            if(sum>k){//二分法查找最大长度
+                min=mid;
+                mid=min+(max-min)/2;
+                sum=0;
+                continue;//******注意使用continue，或者在while循环最后令sum=0
+            }
+            if(sum<k){
+                max=mid;
+                mid=min+(max-min)/2;
+                sum=0;
+                continue;
+            }
+            if(sum==k){//当sum=k时，mid并不一定是最大长度
+                list.add(mid);
+                min=mid;
+                mid=min+(max-min)/2;
+                sum=0;
+                continue;
+            }
+        }
+
+        if(list.size()==0){//如果mid==min，说明mid即为最大值
+            return mid;
+        }
+        
+        return list.get(list.size()-1);
+
+    }
+}
