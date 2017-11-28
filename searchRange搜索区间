@@ -1,0 +1,64 @@
+public class Solution {
+    /*
+     * @param A: an integer sorted array
+     * @param target: an integer to be inserted
+     * @return: a list of length 2, [index1, index2]
+     */
+    public int[] searchRange(int[] A, int target) {
+        // write your code here
+        int len=A.length;//计算数组长度
+        int[] reA=new int[2];//定义返回数组
+        if(len==0){//数组为空时
+            reA[0]=-1;
+            reA[1]=-1;
+            return reA;
+        }
+        
+        int min=0;//定义min，max，mid
+        int max=len-1;
+        int mid=min+(max-min)/2;
+        if(A[len-1]==target){//数组最后一个值为target时
+            for(int i=len-1;i>=0;i--){
+                    if(A[i]!=target){
+                        reA[0]=i+1;
+                        break;
+                    }
+                    reA[0]=0;
+            }
+            reA[1]=len-1;
+            return reA;
+                
+        }
+        
+        while(min!=mid){//二分法查找target
+            if(target>A[mid]){
+                min=mid;
+                mid=min+(max-min)/2;
+            }
+            if(target<A[mid]){
+                max=mid;
+                mid=min+(max-min)/2;
+            }
+            if(target==A[mid]){//找到target后向查找第一个非target的值
+                for(int i=mid;i>=0;i--){
+                    if(A[i]!=target){
+                        reA[0]=i+1;
+                        break;
+                    }
+                }
+                for(int i=mid;i<len;i++){
+                    if(A[i]!=target){
+                        reA[1]=i-1;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        if(min==mid){//当mid==min时，说明数组中不含有target
+            reA[0]=-1;
+            reA[1]=-1;
+        }
+        return reA;
+    }
+}
