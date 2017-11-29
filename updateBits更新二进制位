@@ -1,0 +1,29 @@
+public class Solution {
+    /*
+     * @param n: An integer
+     * @param m: An integer
+     * @param i: A bit position
+     * @param j: A bit position
+     * @return: An integer
+     */
+    public int updateBits(int n, int m, int i, int j) {
+        // write your code here
+        m=m<<i;//m左移i位
+        int num=0;
+        if(i==0&&j==31){//如果i=0，j=31，直接返回m
+            return m;
+        }
+        if(n<0&&m==0&&j==31){//当n<0,m=0,j=31时，先将符号位的1变为0；
+            n=n^(2147483647);
+            n=~n;
+        }
+        if(j==31){//31为符号位
+            j--;
+        }
+        for(int x=i;x<=j;x++){//求i到j位间都为1时的值
+            num+=(int)Math.pow(2,x);
+        }
+        num=num&n;//num与n做“与”运算，计算i到j位间n的值
+        return n-num+m;
+    }
+}
