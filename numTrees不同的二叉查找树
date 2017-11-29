@@ -1,0 +1,62 @@
+public class Solution {
+    /*
+     * @param n: An integer
+     * @return: An integer
+     */
+    public int numTrees(int n) {
+        // write your code here
+        if(n==0){
+            return 1;
+        }
+        if(n==1){
+            return 1;
+        }
+        if(n==2){
+            return 2;
+        }
+        
+        int num=0;
+        for(int i=0;i<n;i++){//卡特兰数
+            num+=numTrees(n-1-i)*numTrees(i);//递归
+        }
+    
+        return num;
+    }
+}
+        /*int num=0;
+        int cate=0;
+        if(n%2==0){
+            for(int i=1;i<=n/2;i++){
+                cate+=fac(n-i)*fac(i-1);
+            }
+            return 2*cate;
+        }
+        if(n%2==1){
+            for(int i=1;i<=n/2;i++){
+                cate+=fac(n-i)*fac(i-1);
+            }
+            cate=2*cate;
+            cate=cate+fac(n/2)*fac(n/2-1);
+            return cate;
+        }
+        return cate;*/
+    
+    
+    /*public int f(int n){
+        if(n==0){
+            return 1;
+        }
+        if(n==1){
+            return 1;
+        }
+        if(n==2){
+            return 2;
+        }
+        
+        int num=0;
+        for(int i=0;i<n;i++){
+            num+=f(n-1-i)*f(i);
+        }
+        return num;
+    }*/
+   
