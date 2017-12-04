@@ -1,0 +1,29 @@
+public class Solution {
+    /*
+     * @param nums: a list of integers
+     * @return: find a  majority number
+     */
+    public int majorityNumber(List<Integer> nums) {
+        // write your code here
+        
+        int len=nums.size();
+        
+        int count=0;
+        int seed=nums.get(0);
+        int i=0;
+        
+        for(i=1;i<len;i++){//用主元素与其他元素抵消，最后剩下的一定是主元素
+            if(seed==nums.get(i)){
+                count++;
+            }else{
+                if(count>0){
+                    count--;
+                }else{
+                    seed=nums.get(i);
+                }
+            }
+            
+        }
+        return seed;
+    }
+}
