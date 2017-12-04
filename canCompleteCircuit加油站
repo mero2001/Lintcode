@@ -1,0 +1,64 @@
+public class Solution {
+    /*
+     * @param gas: An array of integers
+     * @param cost: An array of integers
+     * @return: An integer
+     */
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        // write your code here
+        int len=gas.length;//计算数组长度
+        
+        int sumg=0;//定义sumgas和sumcost
+        int sumc=0;
+        
+        for(int x:gas){//求sumg和sumc
+            sumg+=x;
+        }
+        for(int x:cost){
+            sumc+=x;
+        }
+        
+        if(sumg<sumc){//判断sumg<sumc，直接返回-1；
+            return -1;
+        }
+        boolean flag=false;
+        int num=0;
+        for(int i=0;i<len;i++){//for循环寻找gas[i]>=cost[i]
+            if(gas[i]>=cost[i]){
+                num=i;
+                sumg=gas[num];
+                sumc=cost[num];
+                while(sumg>=sumc){//比较沿途sumg和sumc
+                    i++;
+                    if(i==num){
+                        flag=true;
+                        break;
+                    }
+                    if(i<len){
+                        sumg+=gas[i];
+                        sumc+=cost[i];
+                        
+                    }
+                    if(i==len&&num!=0){
+                        sumg+=gas[0];
+                        sumc+=cost[0];
+                        i=0;
+                    }
+                    if(i==len&&num==0){//当i==len且num==0时，说明已循环一次
+                        return num;
+                    }
+                }
+                if(!flag){
+                    i=num;
+                    continue;
+                }
+                if(flag){
+                    return num;
+                }
+            }
+        }
+        
+        return -1;
+    }
+
+}
