@@ -1,0 +1,44 @@
+public class Solution {
+    /*
+     * @param nums: A list of non negative integers
+     * @return: A string
+     */
+    public String largestNumber(int[] nums) {
+        // write your code here
+        String s1="";//定义各种
+        String s2="";
+        String s12;
+        String s21;
+        double d1;
+        double d2;
+        
+        int len=nums.length;
+        for(int i=len-1;i>=0;i--){//冒泡排序；例如比较1和20，120<201，所以将1和20更换位置
+            for(int j=len-1;j>=len-i;j--){
+                s2=nums[j]+"";//将nums[j]和nums[j-1]转化为字符串
+                s1=nums[j-1]+"";
+                s12=s1+s2;//构建120和201
+                s21=s2+s1;
+                
+                d1=Double.parseDouble(s12);//将字符串转化为double类型
+                d2=Double.parseDouble(s21);
+                
+                if(d1<d2){//如果d1<d2则交换位置
+                    int temp=nums[j-1];
+                    nums[j-1]=nums[j];
+                    nums[j]=temp;
+                }
+            }
+        }
+        
+        String s="";
+        if(nums[0]==0){//判断最高位最大值为0的情况
+            return 0+"";
+        }
+        for(int i=0;i<len;i++){//将数组转化为字符串
+            s+=nums[i];
+        }
+        
+        return s;
+    }
+}
