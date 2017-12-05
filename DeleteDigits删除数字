@@ -1,0 +1,44 @@
+public class Solution {
+    /*
+     * @param A: A positive integer which has N digits, A is a string
+     * @param l: Remove k digits
+     * @return: A string
+     */
+    public String DeleteDigits(String A, int l) {
+        // write your code here
+        
+        int len=A.length();//计算A的长度
+        if(len<=l){//当len<l时，被删光
+            return 0+"";
+        }
+        String str=A;
+        int i=0;
+        while(l>0){
+            i=0;
+            //Character.getNumericValue(charArr[i])
+            //str.charAt(j) - '0'
+            /*int stri=Character.getNumericValue(str.charAt(i));
+            int strii=Character.getNumericValue(str.charAt(i+1));*/
+            while(i<str.length()-1&&Character.getNumericValue(str.charAt(i))<=Character.getNumericValue(str.charAt(i+1))){//将char转化为int类型
+                i++;
+            }
+            if(i==(str.length()-1)){//当i==str.length()-1时，str.substring(i+1)会越界，所以分开讨论
+                str=str.substring(0,i);
+            }else{
+                str=str.substring(0,i)+str.substring(i+1);
+            }
+            //System.out.println(str);
+            l--;
+        }
+        for(int j=0;j<str.length();j++){//去掉前面的0
+            if(str.charAt(j)=='0'&&j==0){//去掉首位的0
+                str=str.substring(0,j)+str.substring(j+1);
+                j--;
+            }
+            
+        }
+        
+        return str;
+        
+    }
+}
