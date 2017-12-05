@@ -1,0 +1,40 @@
+public class Solution {
+    /*
+     * @param A: A list of integers
+     * @return: A boolean
+     */
+    public boolean canJump(int[] A) {
+        // write your code here
+        int len=A.length;//计算数组长度
+        
+        if(len==1){//如果长度为1则直接返回true
+            return true;
+        }
+        
+        if(A[0]==0){//如果A[0]为0，则直接非农户false；
+                return false;
+            }
+            
+        int i=0;
+        
+        while(i<len){//当i<len时循环
+            int count=0;
+            int j;
+            for(j=i;j<=i+A[i];j++){//如果在i到i+A[i]内所有A[j+A[j]]==0，则返回false
+                if(j+A[j]>=len-1){//如果i+A[i]>=len-1,则返回true
+                    return true;
+                }
+                if(A[j+A[j]]==0){
+                    count++;
+                }
+            }
+            if(count==A[i]+1){
+                return false;
+            }
+            
+            i=j;
+            }
+            return true;//不返回false则返回true
+        }
+        
+    }
