@@ -1,0 +1,44 @@
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+
+public class Solution {
+    /*
+     * @param head: head is the head of the linked list
+     * @return: head of linked list
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        // write your code here
+        if(head==null||head.next==null){//如果head或者head.next为null，直接返回
+            return head;
+        }
+        ListNode tempNode=head;//定义tempNode=head
+        /*if(head.next==null){
+                return head;
+        }*/
+        while(tempNode.next!=null){
+            while(tempNode.next!=null&&tempNode.val!=tempNode.next.val){//当tempNode.val!=tempNode.next.val时，tempNode右移
+                tempNode=tempNode.next;
+            }
+            if(tempNode.next!=null&&tempNode.next.next!=null){//若相邻node相等，则跳过
+                tempNode.next=tempNode.next.next;
+            }else{
+                tempNode.next=null;
+                return head;
+            }
+        }
+        
+        return head;
+        
+        
+    }
+}
