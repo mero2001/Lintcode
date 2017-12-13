@@ -1,0 +1,73 @@
+/**
+ * Definition for ListNode.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int val) {
+ *         this.val = val;
+ *         this.next = null;
+ *     }
+ * }
+ */
+
+
+public class Solution {
+    /*
+     * @param head: The first node of linked list
+     * @param x: An integer
+     * @return: A ListNode
+     */
+    public ListNode partition(ListNode head, int x) {
+        // write your code here
+        if(head==null){//返回为空的情况
+            return null;
+        }
+        
+        ListNode node11=new ListNode(-1);//设置pre，和cur
+        node11.next=head;
+        ListNode pre=node11;
+        ListNode cur=head;
+        
+        while(pre.next!=null&&pre.next.val<x){//当pre.next.val<x时，pre右移
+            pre=pre.next;
+        }
+
+        
+        cur=pre;
+        while(cur.next!=null){//当cur.next.val<x时，将cur.next放到pre.next
+            if(cur.next.val<x){
+                ListNode temp=cur.next;
+                cur.next=temp.next;
+                temp.next=pre.next;
+                pre.next=temp;
+                pre=pre.next;
+            }else{
+                cur=cur.next;
+            }
+        }
+        return node11.next;
+        
+       
+      /*  while(head!=null){
+            if(head.val<x){
+                node1.next=head;
+                node1=node1.next; 
+            }else{
+                node2.next=head;
+                node2=node2.next;
+            }
+            head=head.next;
+            if(head!=null){
+                System.out.println(head.val);
+            }
+        }
+        /*if(node1.val==head.val){
+            
+            System.out.println(node21.val);
+            //System.out.println(node2.val);
+            return node21;
+        }*/
+        /*node1.next=node21.next;
+        return node11.next;*/
+    }
+}
