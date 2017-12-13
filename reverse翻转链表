@@ -1,0 +1,55 @@
+/**
+ * Definition for ListNode.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int val) {
+ *         this.val = val;
+ *         this.next = null;
+ *     }
+ * }
+ */
+
+
+public class Solution {
+    /*
+     * @param head: n
+     * @return: The new head of reversed linked list.
+     */
+    public ListNode reverse(ListNode head) {
+        // write your code here
+        if(head==null||head.next==null){
+            return head;
+        }
+        
+        /*ListNode inde=head;//遍历head之后的每个节点，并放到head之后
+        ListNode temp=head;
+        
+    
+        while(inde.next!=null){
+            temp=head.next;
+            head.next=inde;
+            head.next.next=temp;
+            inde=inde.next;
+            
+        }
+        
+        ListNode reHead=head.next;
+        
+        inde.next=head;
+        head.next=null;
+        
+        return reHead;*/
+        
+        ListNode dummy=null;//尾插法
+        
+        while(head!=null){
+            ListNode temp=head.next;
+            head.next=dummy;
+            dummy=head;
+            head=temp;
+        }
+        return dummy;
+        
+    }
+}
