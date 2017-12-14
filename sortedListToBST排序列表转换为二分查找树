@@ -1,0 +1,101 @@
+/**
+ * Definition for ListNode.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int val) {
+ *         this.val = val;
+ *         this.next = null;
+ *     }
+ * }
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+
+public class Solution {
+    /*
+     * @param head: The first node of linked list.
+     * @return: a tree node
+     */
+    public TreeNode sortedListToBST(ListNode head) {
+        // write your code here
+        TreeNode mid=null;//定义返回节点
+        if(head==null){//当head为null时
+            mid=null;
+            return mid;
+        }
+        /*else if(head.next==null){
+            mid=new TreeNode(head.val);
+            System.out.println("head.next==null");
+            return mid;
+        }*/
+        int len = 0; //定义链表长度
+        ListNode temp = head; 
+        while(temp!=null){len++;temp = temp.next;};//计算数组长度 
+        if(len==1) //当len==1时，直接返回new TreeNode(head.val)
+        { 
+        return new TreeNode(head.val); 
+        } 
+        else if(len==2) {//当len==2时
+        TreeNode root = new TreeNode(head.val); 
+        root.right = new TreeNode(head.next.val); 
+        return root; 
+        } 
+        else{ //当len>=2时
+        len/=2; 
+        temp = head; 
+        int cnt = 0; 
+        while(cnt<len) { //找到中间值
+        temp = temp.next; 
+        cnt++; 
+        } 
+        ListNode pre = head; 
+        while(pre.next!=temp){ 
+        pre = pre.next; }
+        pre.next = null; //截断左半链表
+        TreeNode root = new TreeNode(temp.val); 
+        root.left = sortedListToBST(head); 
+        root.right = sortedListToBST(temp.next); 
+        return root; 
+        }
+        /*else{
+        ListNode dummy=new ListNode(-1);
+        dummy.next=head;
+        
+        ListNode slow=dummy;
+        ListNode fast=head;
+        
+        while(fast!=null&&fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        ListNode lhead=dummy;
+        ListNode rhead=dummy;
+        
+        lhead=dummy.next;
+        if(lhead==slow){
+            lhead=null;
+        }
+        rhead=slow.next;
+        mid=new TreeNode(slow.val);
+        slow=null;
+        
+        
+        mid.left=sortedListToBST(lhead);
+        System.out.println("lhead.val");
+        mid.right=sortedListToBST(rhead);
+        System.out.println("rhead.val");
+        }
+        
+        return mid;*/
+        }
+        }
+        
