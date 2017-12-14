@@ -1,0 +1,60 @@
+/**
+ * Definition for singly-linked list with a random pointer.
+ * class RandomListNode {
+ *     int label;
+ *     RandomListNode next, random;
+ *     RandomListNode(int x) { this.label = x; }
+ * };
+ */
+public class Solution {
+    /**
+     * @param head: The head of linked list with a random pointer.
+     * @return: A new head of a deep copy of the list.
+     */
+    public RandomListNode copyRandomList(RandomListNode head) {
+        // write your code here
+        if(head==null){//head==null时
+            return null;
+        }
+        if(head.next==null){//head.next==null时
+            RandomListNode a_head=new RandomListNode(head.label);
+            a_head.random=null;
+            return a_head;
+        }
+        
+        RandomListNode p1=head;
+        RandomListNode p2=new RandomListNode(head.label);
+        RandomListNode a_head=p2;
+        while(p1!=null){//在每一个p1结点后插入一个一样的p2结点
+            RandomListNode temp=p1.next;
+            p2=new RandomListNode(p1.label);
+            p2.next=temp;
+            p1.next=p2;
+            p1=p1.next.next;
+        }
+        
+        p1=head;
+        a_head=head.next;
+        
+        while(p1!=null){//为每个p2节点的random赋值
+            if(p1.random!=null){
+                p1.next.random=p1.random.next;
+            }else{
+                p1.next.random=null;
+            }
+            //p1.next.next=p1.next.next.next;
+            p1= p1.next.next;
+        }
+        
+        p2=a_head;
+        while(p2!=null){//将p2独立成一个链表
+            if(p2.next==null){
+                return a_head;
+            }
+            p2.next=p2.next.next;
+            p2=p2.next;
+        }
+        
+        return a_head;
+    }
+}
