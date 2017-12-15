@@ -1,0 +1,64 @@
+/**
+ * Definition for ListNode.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int val) {
+ *         this.val = val;
+ *         this.next = null;
+ *     }
+ * }
+ */
+
+
+public class Solution {
+    /*
+     * @param head: The head of linked list.
+     * @return: nothing
+     */
+    public void reorderList(ListNode head) {
+        // write your code here
+        if(head==null||head.next==null||head.next.next==null){//先判断各种不用改动的情况
+            
+        }else{
+
+        ListNode dummy=new ListNode(-1);//找中间节点
+        dummy.next=head;
+        ListNode slow=dummy;
+        ListNode fast=head;
+        
+        while(fast!=null&&fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        
+        slow=slow.next;
+        ListNode rhead=null;
+        ListNode temp=null;
+        while(slow!=null){//将后半段反转
+            temp=slow.next;
+            slow.next=rhead;
+            rhead=slow;
+            slow=temp;
+        }
+        
+        ListNode ahead=head;
+        ListNode tp1=null;
+        ListNode tp2=null;
+        while(rhead!=null){//将后半段插入前半段中
+            tp1=ahead.next;
+            tp2=rhead.next;
+            ahead.next=rhead;
+            rhead.next=tp1;
+            ahead=tp1;
+            rhead=tp2;
+        }
+        if(ahead!=null&&ahead.next!=null){//判断前半段比后半段多一个节点的情况
+            rhead=ahead.next;
+            rhead.next=null;
+        }
+        }
+        
+        
+    }
+}
