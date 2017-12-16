@@ -1,0 +1,79 @@
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+
+public class Solution {
+    /*
+     * @param root: The root of binary tree.
+     * @return: True if the binary tree is BST, or false
+     */
+    public boolean isValidBST(TreeNode root) {
+        // write your code here
+        if(root==null){
+            return true;
+        }
+        List<Integer> list=new ArrayList<Integer>();
+        //list.add(root.val);
+        list=inorderTraversal(root);
+        
+        int len=list.size();//获得列表长度
+        
+        for(int i=0;i<len-1;i++){//如果前面的元素大于等于后面元素，直接返回false
+            if(list.get(i)>=list.get(i+1)){
+                return false;
+            }
+        }
+        return true;
+        
+        
+    }
+    
+    public List<Integer> inorderTraversal(TreeNode root) {//中序遍历
+        List<Integer> list = new ArrayList<Integer>();
+        if(root==null)
+            return list;
+        if (root.left != null){//先添加左子树
+            list.addAll(inorderTraversal(root.left));
+        }
+        list.add(root.val);//添加根节点
+        if (root.right != null){//添加右子树
+            list.addAll(inorderTraversal(root.right));
+        }
+        return list;
+}
+
+        
+        
+        /*boolean flag1=true;
+        boolean flag2=true;
+        if(root.left!=null){
+            if(root.left.val>=root.val){
+                return false;
+            }else{
+                flag1=isValidBST(root.left);
+            }
+            
+        }
+        if(root.right!=null){
+            if(root.right.val<=root.val){
+                return false;
+            }else{
+                flag2=isValidBST(root.right);
+            }
+       
+        }
+        
+        return flag1&&flag2;*/
+        
+        
+    
+}
