@@ -1,0 +1,48 @@
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+
+public class Solution {
+    /*
+     * @param root: A Tree
+     * @return: Preorder in ArrayList which contains node values.
+     */
+    public List<Integer> preorderTraversal(TreeNode root) {
+        // write your code here
+        List<Integer> list=new ArrayList<Integer>();
+        
+        if(root==null){//当root==null时
+            return list;
+        }
+        list.add(root.val);//当root！=null时，先往list添加根节点
+        list=pre(list,root);
+        //list2.addAll(list);
+        return list;
+    }
+
+    public List<Integer> pre(List<Integer> list,TreeNode root){
+        if(root==null){
+            return list;
+        }
+        
+        if(root.left!=null){//递归遍历左子树和右子树
+            list.add(root.left.val);
+            pre(list,root.left);
+        }
+        if(root.right!=null){
+            list.add(root.right.val);
+            pre(list,root.right);
+        }
+        return list;
+        
+    }
+}
