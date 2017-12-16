@@ -1,0 +1,95 @@
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+ 
+ 
+public class Solution {
+    /**
+     *@param preorder : A list of integers that preorder traversal of a tree
+     *@param inorder : A list of integers that inorder traversal of a tree
+     *@return : Root of a tree
+     */
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        // write your code here
+        
+        int len1=preorder.length;
+        int len2=inorder.length;
+        
+        if(len1<=0||len2<=0){
+            return null;
+        }
+        
+        return dp(preorder,inorder);
+    }
+    
+    public TreeNode dp(int[] preorder,int[] inorder){
+        int len1=preorder.length;//计算前序数组和中序数组长度
+        int len2=inorder.length;
+        
+        if(len1<=0||len2<=0){
+            return null;
+        }
+        
+        TreeNode root=new TreeNode(preorder[0]);//前序数组的第一个元素为根节点的值
+        //root.val=preorder[0];
+        if(len1==1||len2==1){//当len==1时，说明只有一个节点，返回根节点
+            return root;
+        }
+        int r=0;
+        for(int i=0;i<len1;i++){//在中序数组中查找根节点的位置
+            if(inorder[i]==root.val){
+                r=i;
+                break;
+            }
+        }
+        
+        List<Integer> linorder=new ArrayList<Integer>();
+        List<Integer> rinorder=new ArrayList<Integer>();
+        List<Integer> lpreorder=new ArrayList<Integer>();
+        List<Integer> rpreorder=new ArrayList<Integer>();
+        
+        for(int i=0;i<r;i++){//中序数组根元素的左边放入linorder,前序数组根元素之后的r个元素放入lpreorder
+            linorder.add(inorder[i]);
+            lpreorder.add(preorder[i+1]);
+        }
+        for(int i=r+1;i<len2;i++){//中序数组根元素的右边放入rinorder
+            rinorder.add(inorder[i]);
+            rpreorder.add(preorder[i]);
+        }
+
+        
+        int[] liorder=listToArray(linorder);
+        int[] riorder=listToArray(rinorder);
+        int[] lporder=listToArray(lpreorder);
+        int[] rporder=listToArray(rpreorder);
+        
+        root.left=dp(lporder,liorder);//递归构造二叉树
+        root.right=dp(rporder,riorder);
+        
+        return root;
+        
+        
+    }
+    
+    public int[] listToArray(List<Integer> list){//list转换为数组
+        int len=list.size();
+        
+        int[] arr=new int[len];
+        
+        for(int i=0;i<len;i++){
+            arr[i]=list.get(i);
+        }
+        
+        return arr;
+        
+    }
+   
+}
