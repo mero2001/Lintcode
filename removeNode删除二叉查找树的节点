@@ -1,0 +1,49 @@
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+
+public class Solution {
+    /*
+     * @param root: The root of the binary search tree.
+     * @param value: Remove the node with given value.
+     * @return: The root of the binary search tree after removal.
+     */
+
+    public TreeNode removeNode(TreeNode root, int value) {
+        // write your code here
+        
+        if(root==null){
+            return null;
+        }
+        
+        if(root.val>value){//查找到该节点
+            root.left=removeNode(root.left,value);
+        }else if(root.val<value){
+            root.right=removeNode(root.right,value);
+        }else{
+            if(root.left==null||root.right==null){//当只有左子树或者右子树的情况，直接让左子树或右子树节点变为root
+                root=(root.left!=null)?root.left:root.right;
+            }else{//当左右子树都存在时，查找右子树的最左（最小）节点，作为root，并删除此节点。
+                TreeNode cur=root.right;
+                while(cur.left!=null){
+                    cur=cur.left;
+                }
+                root.val=cur.val;
+                root.right=removeNode(root.right,cur.val);
+            }
+        }
+        return root;
+        
+        
+    }
+    
+}
