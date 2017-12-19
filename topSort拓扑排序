@@ -1,0 +1,50 @@
+/**
+ * Definition for Directed graph.
+ * class DirectedGraphNode {
+ *     int label;
+ *     ArrayList<DirectedGraphNode> neighbors;
+ *     DirectedGraphNode(int x) { label = x; neighbors = new ArrayList<DirectedGraphNode>(); }
+ * };
+ */
+
+public class Solution {
+    /*
+     * @param graph: A list of Directed graph node
+     * @return: Any topological order for the given graph.
+     */
+    public ArrayList<DirectedGraphNode> topSort(ArrayList<DirectedGraphNode> graph) {
+        // write your code here
+        ArrayList<DirectedGraphNode> res=new ArrayList();
+        if(graph.size()==0){
+            return res;
+        }
+        HashMap<DirectedGraphNode,Set<DirectedGraphNode>> map=new HashMap();
+        for(DirectedGraphNode each:graph){
+            map.put(each,new HashSet<DirectedGraphNode>());
+        }
+        for(DirectedGraphNode each:graph){
+            for(int i=0;i<each.neighbors.size();i++){
+                map.get(each.neighbors.get(i)).add(each);//给每个结点的set里添加所有邻居结点
+            }
+        }
+        while(graph.size()>0){//不断循环去掉入度为0的节点
+            int index=0;
+            while(index<graph.size()){
+                DirectedGraphNode cur=graph.get(index);
+                if(map.get(cur).size()==0){//从graph中移除入度为0的节点，并且在res中添加该节点
+                    res.add(cur);
+                    graph.remove(index);
+                    for(DirectedGraphNode elem:graph){//在其他节点的邻居set中去除掉该入度为0的节点
+                        if(map.get(elem).contains(cur)){
+                            map.get(elem).remove(cur);
+                        }
+                    }
+                }
+                else{
+                    index++;
+                }
+            }
+        }
+        return res;
+        
+    }
