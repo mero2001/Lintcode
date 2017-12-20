@@ -1,0 +1,76 @@
+public class Solution {
+    /*
+     * @param start: a string
+     * @param end: a string
+     * @param dict: a set of string
+     * @return: An integer
+     */
+    public int ladderLength(String start, String end, Set<String> dict) {
+        // write your code here
+        if(start.length()!=end.length()){
+            return 0;
+        }
+        
+        if(start.isEmpty()||end.isEmpty()||dict.isEmpty()){
+            return 0;
+        }
+        
+        if(start.equals(end)){
+            return 1;
+        }
+        Object[] str=dict.toArray();//将dict转化为数组便于操作
+        Queue<String> path=new LinkedList<String>();//定义队列存储分层字符串
+        path.add(start);
+        path.add("!");//分层符
+        
+        int count=1;//定义返回值
+        int[] visited=new int[dict.size()];
+        
+        while(!path.isEmpty()){
+            String tmp=path.poll();
+            if(tmp.equals("!")){//每经过一层，count+1
+                count++;
+                continue;//tmp为“！”时，就不必进行循环后续步骤了
+            }
+            if(isCharDifferent(tmp,end)){//当tmp与end只差一个字符时，则count+1，并返回
+                count++;
+                return count;
+            }
+            for(int i=0;i<dict.size();i++){//遍历字符数组，查找与tmp只差一个字符的字符串，并添加到队列中
+                if(visited[i]==0&&isCharDifferent(tmp, str[i].toString())){
+                    path.add(str[i].toString());
+                    visited[i]=1;
+                }
+            }
+            
+            if(path.peek().equals("!")){//.peek表示返回队伍首元素但不删除。如果首元素为“！”，表示该层已经结束。并往队列末尾再加一个“！”
+                path.add("!");
+            }
+            
+        }
+        return 0;
+    }
+    
+    
+    public boolean isCharDifferent(String a, String b){//判断两个字符串是否只差一个字符的函数
+        int count=0;
+        int lenA=a.length();
+        int lenB=b.length();
+        
+        if(lenA!=lenB){
+            return false;
+        }
+        
+        for(int i=0;i<lenA;i++){
+            if(a.charAt(i)!=b.charAt(i)){
+                count++;
+            }
+        }
+        
+        if(count==1){
+            return true;
+        }
+        
+        return false;
+    }
+}
