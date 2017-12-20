@@ -1,0 +1,58 @@
+public class Solution {
+    /*
+     * @param n: The number of queens
+     * @return: All distinct solutions
+     */
+    public List<List<String>> solveNQueens(int n) {
+        // write your code here
+        List<List<String>> res=new ArrayList<>();
+        List<String> cur=new ArrayList<>();
+        StringBuilder sb=new StringBuilder();
+        for(int i=0;i<n;i++){
+            sb.append('.');
+        }
+        for(int i=0;i<n;i++){
+            cur.add(sb.toString());
+        }
+        dfs(n,0,cur,res);
+        return res;
+    }
+    
+    public void dfs(int n, int row, List<String> cur, List<List<String>> res){
+        if(row==n){
+            List<String> copy=new ArrayList();
+            for(int i=0;i<n;i++){
+                copy.add(cur.get(i));
+                //res.add(copy);不同的list<String>表示不同解决方案
+            }
+            res.add(copy);
+            return;
+        }
+        for(int j=0;j<n;j++){
+            if(isValid(cur,n,row,j)){
+                StringBuilder sb=new StringBuilder();
+                sb.append(cur.get(row));
+                sb.setCharAt(j,'Q');
+                //cur.get(row)=sb.toString();
+                cur.set(row,sb.toString());
+                dfs(n,row+1,cur,res);//递归求每一行Q所在的位置
+                sb.setCharAt(j,'.');
+                //cur.get(row)=sb.toString(); get不能用来改变该元素的值，需使用set
+                cur.set(row,sb.toString());//res.add(copy)之后，把所有行重新变成“.”；并进入下一个循环
+            }
+        }
+    }
+    
+    
+    public boolean isValid(List<String> cur,int n,int row, int col){//判断某行某列放上皇后是否会与其他皇后冲突
+        for(int i=0;i<row;i++){//遍历之前所有行和所有列
+            for(int j=0;j<n;j++){
+                if(cur.get(i).charAt(j)=='Q'&&(j==col||Math.abs(row-i)==Math.abs(col-j))){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+}
