@@ -1,0 +1,65 @@
+public class Solution {
+    /*
+     * @param nums: A set of numbers.
+     * @return: A list of lists. All valid subsets.
+     */
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        // write your code here
+        List<List<Integer>> res=new ArrayList<List<Integer>>();//定义返回list
+        List<Integer> list=new ArrayList<Integer>();
+        
+        
+        int len=nums.length;
+        if(len==0){//判断当数组为空的情况
+            return res;
+        }
+        Arrays.sort(nums);//由于题目规定所以子集非降序，故先对数组进行排序
+        int start=0;
+        DFS(res,list,nums,start,len);
+        return res;
+    }
+    
+    public void DFS(List<List<Integer>> res,List<Integer> list,int[] nums,int start,int len){//递归往res中添加元素
+        if(!isContain(res,list)){
+            List<Integer> tmp=new ArrayList<Integer>(list);
+            //System.out.println(list.get(0));
+            res.add(tmp);
+            //return;此时不应该return，因为后续还可以添加元素
+        }
+        
+        if(start>=len){//只有当start>=len时，才应return
+            return;
+        }
+        
+        
+        for(int i=start;i<len;i++){//遍历数组中的所有组合
+            list.add(nums[i]);
+            DFS(res,list,nums,i+1,len);
+            list.remove(list.size()-1);
+        }
+    }
+    
+    public boolean isContain(List<List<Integer>> res, List<Integer> list){//由于list.contains功能对比的是引用地址，所以重新一个isContain函数判断res中是否含有list
+        int len1=res.size();
+        int len2=list.size();
+        
+        for(int i=0;i<len1;i++){
+            List<Integer> tmp=new ArrayList<Integer>();
+            tmp=res.get(i);
+            int len3=tmp.size();
+            if(len3==len2){
+                int count=0;
+                for(int j=0;j<len2;j++){
+                    if(tmp.get(j)==list.get(j)){
+                        count++;
+                    }
+                }
+                if(count==len2){
+                    return true;
+                }
+            }
+            
+        }
+        return false;
+    }
+}
