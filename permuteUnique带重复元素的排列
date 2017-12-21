@@ -1,0 +1,44 @@
+public class Solution {
+    /*
+     * @param :  A list of integers
+     * @return: A list of unique permutations
+     */
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        // write your code here
+        List<List<Integer>>res=new ArrayList<List<Integer>>();  
+        List<Integer> list=new ArrayList<Integer>();
+        
+        int len=nums.length;
+        if(len==0){//判断nums为空的情况
+            res.add(list);
+            return res;
+        }
+        Arrays.sort(nums);//排序：则相同的元素会在相邻位置
+        int[] visited=new int[len];
+        DFS(res, list, visited, nums, len);
+        
+        return res;
+        
+    }   
+    public void DFS(List<List<Integer>> res, List<Integer> list, int[] visited, int[] nums, int len) {
+        if(list.size()==len){//当list.size()==len时，往res中添加list
+            List<Integer> tmp=new ArrayList(list);
+            res.add(tmp);
+            return;
+        }
+        
+        for(int i=0;i<len;i++){//递归遍历
+            if(visited[i]==1||(i!=0&&visited[i-1]==0&&nums[i]==nums[i-1])){//当visited[i]==1时，不往里重复添加元素。为了确保nums中存在相同的元素不会造成重复的list，规定在排序后的nums中相同元素出现在list的次序也相同。
+                continue;
+            }
+            list.add(nums[i]);
+            visited[i]=1;
+            DFS(res,list,visited,nums,len);
+            list.remove(list.size()-1);
+            visited[i]=0;//不要忘记
+        }
+  
+        
+  
+    }  
+}  
