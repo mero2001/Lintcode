@@ -1,0 +1,42 @@
+public class Solution {
+    
+    /*
+     * @param nums: A set of numbers
+     * @return: A list of lists
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        // write your code here
+        List<List<Integer>> res=new ArrayList<List<Integer>>();
+        List<Integer> list=new ArrayList<Integer>();
+        int len=nums.length;
+        if(len==0){
+            res.add(list);//注意先将list添加进去再返回
+            return res;
+        }
+        Arrays.sort(nums);
+        int start=0;
+        
+        DFS(res,list,nums,start,len);
+        
+        return res;
+    }
+    
+    public void DFS(List<List<Integer>> res, List<Integer> list,int[] nums, int start, int len){//递归添加所有子集，因为原数组无重复元素，所以不需要做判断
+        
+        
+        List<Integer> tmp=new ArrayList(list);
+        res.add(tmp);
+        
+        if(start>=len){//当start>=len时，直接返回
+            return;
+        }
+        
+        for(int i=start;i<len;i++){//遍历递归
+            list.add(nums[i]);
+            DFS(res,list,nums,i+1,len);
+            list.remove(list.size()-1);
+        }
+    }
+    
+    
+}
