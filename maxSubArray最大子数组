@@ -1,0 +1,21 @@
+public class Solution {
+    /*
+     * @param nums: A list of integers
+     * @return: A integer indicate the sum of max subarray
+     */
+    public int maxSubArray(int[] nums) {
+        // write your code here
+        int max=nums[0];
+        int len=nums.length;
+        for(int i=0;i<len;i++){
+            int tmp=nums[i];
+            for(int j=i+1;j<len;j++){
+                tmp+=nums[j];
+                if(tmp>max){
+                    max=tmp;
+                }
+            }
+        }
+        return max;
+    }
+}
