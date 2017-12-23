@@ -1,0 +1,43 @@
+public class Solution {
+    /**
+     * @param n: An integer
+     * @return: An integer
+     */
+    public int climbStairs(int n) {
+        /*
+        登上第1级：1种 
+        登上第2级：2种 
+        登上第3级：1+2=3种（前一步要么从第1级迈上来,要么从第2级迈上来） 
+        登上第4级：2+3=5种（前一步要么从第2级迈上来,要么从第3级迈上来） 
+        登上第5级：3+5=8种 
+        登上第6级：5+8=13种 
+        登上第7级：8+13=21种 
+        登上第8级：13+21=34种 
+        登上第9级：21+34=55种 
+        登上第10级：34+55=89种．*/
+        // write your code here
+        /*if(n==1){//递归版本，超时
+            return 1;
+        }
+        if(n==2){
+            return 2;
+        }
+        int re= climbStairs(n-1)+climbStairs(n-2);
+        return re;*/
+        int a=1;
+        int b=1;
+        int re=0;
+        if(n==0){
+            return 0;
+        }
+        if(n==1){
+            return 1;
+        }
+        while(--n>0){
+            re=a+b;
+            b=a;
+            a=re;
+        }
+        return re;
+    }
+}
