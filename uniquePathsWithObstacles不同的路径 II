@@ -1,0 +1,63 @@
+public class Solution {
+    /*
+     * @param obstacleGrid: A list of lists of integers
+     * @return: An integer
+     */
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        // write your code here
+        if(obstacleGrid==null||obstacleGrid[0][0]==1){//判断特殊情况
+            return 0;
+        }
+        
+        int rownum=obstacleGrid.length;//计算行数和列数
+        int colnum=obstacleGrid[0].length;
+        
+        
+        int[][] path=new int[rownum][colnum];//定义path数组，记录路线个数
+        int[] columns=obstacleGrid[0];
+        
+        boolean hasPath=true;
+        
+        for(int i=0;i<rownum;i++){//对第一列而言，如果出现一个1，则后续行元素都为1
+            if(!hasPath){
+                path[i][0]=0;
+                continue;//一定要加，在hasPath为false时，就不进行后续程序。
+            }
+            if(obstacleGrid[i][0]==1){
+                path[i][0]=0;
+                hasPath=false;
+            }else{
+                path[i][0]=1;
+            }
+        }
+        
+        hasPath=true;
+        
+        for(int i=0;i<colnum;i++){//对第一行而言，如果出现一个1，则后续列元素都为1
+            if(!hasPath){
+                path[0][i]=0;
+                continue;
+            }
+            if(obstacleGrid[0][i]==1){
+                path[0][i]=0;
+                hasPath=false;
+            }else{
+                path[0][i]=1;
+            }
+        }
+        int i=1;
+        int j=1;
+        
+        for(i=1;i<rownum;i++){
+            for(j=1;j<colnum;j++){
+                if(obstacleGrid[i][j]==1){//遍历，如果元素为1，则此路不同，path为0
+                    path[i][j]=0;
+                    //continue;
+                }else{
+                    path[i][j]=path[i-1][j]+path[i][j-1];//path数量计算方法，等于相邻两个path元素之和
+                }
+            }
+        }
+        return path[i-1][j-1];
+    }
+}
