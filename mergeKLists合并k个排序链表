@@ -1,0 +1,50 @@
+/**
+ * Definition for ListNode.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int val) {
+ *         this.val = val;
+ *         this.next = null;
+ *     }
+ * }
+ */ 
+public class Solution {
+    /**
+     * @param lists: a list of ListNode
+     * @return: The head of one sorted list.
+     */
+    public ListNode mergeKLists(List<ListNode> lists) {  
+        // write your code here
+        if(lists==null){
+            return null;
+        }
+        List<Integer> numlist=new ArrayList();
+        for(ListNode node:lists){//将所有listnode.val存放近arraylist
+            while(node!=null){
+                numlist.add(node.val);
+                node=node.next;
+            }
+        }
+        int size=numlist.size();
+        if(size==0){
+            return null;
+        }
+        int[] nums=new int[size];
+        for(int i=0;i<size;i++){//将arraylist转化为数组nums[]
+            nums[i]=numlist.get(i);
+        }
+        Arrays.sort(nums);//对数组进行排序
+        
+        int len=nums.length;
+        ListNode node=new ListNode(nums[0]);
+        ListNode head=node;
+        for(int i=1;i<len;i++){//将排序后的数组转化为链表
+            node.next=new ListNode(nums[i]);
+            node=node.next;
+        }
+        node.next=null;
+        
+        return head;
+    }
+}
