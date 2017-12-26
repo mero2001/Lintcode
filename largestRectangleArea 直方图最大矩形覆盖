@@ -1,0 +1,64 @@
+public class Solution {
+    /*
+     * @param height: A list of integer
+     * @return: The area of largest rectangle in the histogram
+     */
+    public int largestRectangleArea(int[] height) {
+        // write your code here
+        int len=height.length;
+        if(len==0||height==null){
+            return 0;
+        }
+        int max=0;
+        for(int i=0;i<len;i++){//寻找一个区域内的峰值
+            if((i<len-1)&&height[i]<=height[i+1]){
+                continue;
+            }
+            int minh=height[i];
+            for(int j=i;j>=0;j--){//与其之前的数组成不同面积并比较
+                minh=Math.min(height[j],minh);//寻找最小高度
+                max=Math.max(max,minh*(i-j+1));//对比确认最大面积
+            }
+        }
+        
+        return max;
+    }
+        
+        
+        //超时
+        /*int len=height.length;
+        if(len==0||height==null){
+            return 0;
+        }
+        
+        List<Integer> list=new ArrayList();
+        int max=height[0];
+        
+        for(int i=0;i<len;i++){
+            for(int j=i;j<len;j++){
+                int pro=(j-i+1)*minvalue(height,i,j);
+                if(max<pro){
+                    max=pro;
+                }
+            }
+        }
+        
+        return max;
+    }
+    
+    public int minvalue(int[] height, int i, int j){
+        if(i==j){
+            return height[i];
+        }
+        int len=j-i+1;
+        int[] nums=new int[len];
+        
+        for(int m=0;m<len;m++){
+            nums[m]=height[m+i];
+        }
+        
+        Arrays.sort(nums);
+        
+        return nums[0];
+    }*/
+}
