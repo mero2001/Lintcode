@@ -1,0 +1,68 @@
+public class Solution {
+    /*
+     * @param board: A list of lists of character
+     * @param words: A list of string
+     * @return: A list of string
+     */
+    public List<String> wordSearchII(char[][] board, List<String> words) {
+        // write your code here
+        if(board==null||board.length==0){
+            return null;
+        }
+        List<String> res=new ArrayList();
+        if(words.size()==0||words==null){
+            return res;
+        }
+        
+        for(String s:words){
+            if(exist(board,s)){
+                res.add(s);
+            }
+        }
+        
+        return res;
+    }
+    
+    public boolean exist(char[][] board, String word){//判断该单词是否存在于board中的函数
+        if(board==null||board.length==0){
+            return false;
+        }
+        int rownum=board.length;
+        int colnum=board[0].length;
+        int len=word.length();
+        boolean visited[][]=new boolean[rownum][colnum];//定义boolean数组，被访问过则变为true
+        for(int i=0;i<rownum;i++){
+            for(int j=0;j<colnum;j++){
+                if(word.charAt(0)==board[i][j]){//在board中查找word的第一个字符，并调用search函数确认剩下字符是否存在board中
+                    visited[i][j]=true;
+                    if(len==1||search(i,j,board,word.substring(1),visited)){
+                        return true;
+                    }
+                    visited[i][j]=false;//在每次循环后记得把该值改为默认false值
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean search(int i, int j, char[][] board, String word, boolean[][] visited){
+        if(word.length()==0||word==null){
+            return true;
+        }
+        int[][] direct={{-1,0},{1,0},{0,-1},{0,1}};//方向数组
+        for(int k=0;k<direct.length;k++){//使用for循环就不用if分情况讨论不同边界情况了！
+            int ii=i+direct[k][0];
+            int jj=j+direct[k][1];
+            if(ii>=0&&ii<board.length&&jj>=0&&jj<board[i].length&&!visited[ii][jj]&&word.charAt(0)==board[ii][jj]){//注意判断条件！！！确保board[ii][jj]在board中
+                visited[ii][jj]=true;
+                if(word.length()==1||search(ii,jj,board,word.substring(1),visited)){//递归回溯
+                    return true;
+                }
+                visited[ii][jj]=false;
+            }
+            
+        }
+        return false;
+    }
+
+}
