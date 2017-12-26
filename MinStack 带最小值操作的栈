@@ -1,0 +1,50 @@
+public class MinStack {
+    
+    public Stack<Integer> data=new Stack();
+    public Stack<Integer> mins=new Stack();
+    
+    public MinStack() {
+        // do intialization if necessary
+        /*Stack<Integer> data=new Stack();
+        Stack<Integer> mins=new Stack();*/
+    }
+
+    /*
+     * @param number: An integer
+     * @return: nothing
+     */
+    public void push(int number) {//向两个栈中都压入元素
+        // write your code here
+        data.push(number);
+        if(mins.empty()||mins.peek()>number){//总是往mins中压入较小元素
+            mins.push(number);
+        }else{
+            mins.push(mins.peek());//如果number比min最上面的元素大，则将mins顶部最小元素再压入一次，确保两个栈size相同
+        }
+    }
+
+    /*
+     * @return: An integer
+     */
+    public int pop() {//两个栈同时弹出最上层元素，确保两个栈size相同
+        // write your code here
+        if(!mins.empty()&&!data.empty()){
+            int t=data.peek();
+            data.pop();
+            mins.pop();
+            return t;
+        }
+        return 0;
+    }
+
+    /*
+     * @return: An integer
+     */
+    public int min() {
+        // write your code here
+        if(!mins.empty()&&!data.empty()){//返回mins的最上层元素
+            return mins.peek();
+        }
+        return 0;
+    }
+}
