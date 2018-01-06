@@ -1,0 +1,62 @@
+public class Solution {
+    
+    /*
+     * @param nums1: an integer array
+     * @param nums2: an integer array
+     * @return: an integer array
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        // write your code here
+       Arrays.sort(nums1);//先对nums1和nums2排序
+       Arrays.sort(nums2);
+       int len1=nums1.length;//计算nums1和nums2长度，并根据长度进行查询
+       int len2=nums2.length;
+       
+       List<Integer> list=new ArrayList();//新建list存放查询结果
+       int j=0;
+       if(len1>len2){
+           for(int i=0;i<len1;i++){//遍历nums1和nums2
+               while(j<len2){
+                   if(nums1[i]==nums2[j]){
+                       list.add(nums2[j]);
+                       j++;
+                       break;
+                   }
+                   else if(nums1[i]<nums2[j]){
+                       break;
+                   }
+                   else if(nums1[i]>nums2[j]){
+                       j++;
+                   }
+               }
+           }
+       }else{
+           for(int i=0;i<len2;i++){
+               while(j<len1){
+                   if(nums2[i]==nums1[j]){
+                       list.add(nums1[j]);
+                       j++;
+                       break;
+                   }
+                   else if(nums2[i]<nums1[j]){
+                       break;
+                   }
+                   else if(nums2[i]>nums1[j]){
+                       j++;
+                   }
+               }
+           }
+       }
+       
+       int len3=list.size();
+       int[] reArray=new int[len3];
+       for(int m=0;m<len3;m++){//list转换为数组
+           reArray[m]=list.get(m);
+       }
+       
+       return reArray;
+       
+       
+       
+    }
+};
