@@ -1,0 +1,84 @@
+public class Solution {
+    
+    /*
+     * @param nums1: an integer array
+     * @param nums2: an integer array
+     * @return: an integer array
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        // write your code here
+        int len1=nums1.length;
+        int len2=nums2.length;
+        
+        Arrays.sort(nums1);//对两个数组排序
+        Arrays.sort(nums2);
+        
+        Set<Integer> set=new HashSet();//创建set
+        
+        
+        int j=0;
+        //int i=0;
+        /*while(i<len1&&j<len2){//可行
+            while(i<len1&&j<len2&&nums1[i]==nums2[j]){
+                set.add(nums1[i]);
+                i++;
+                j++;
+            }
+            while(i<len1&&j<len2&&nums1[i]>nums2[j]){
+                j++;
+            }
+            while(i<len1&&j<len2&&nums1[i]<nums2[j]){
+                i++;
+            }
+        }*/
+        if(len1>=len2){//遍历添加
+            for(int i=0;i<len1;i++){
+                if(j==len2){
+                    break;
+                }
+                while(j<len2){//注意里层循环不要使用for(int j=0;j<len2;j++)
+                    if(nums2[j]>nums1[i]){
+                        break;
+                    }
+                    else if(nums2[j]==nums1[i]){
+                        set.add(nums2[j]);
+                        j++;
+                        break;
+                    }else{
+                        j++;
+                    }
+                }
+            }
+        }
+        else if(len1<len2){
+            for(int i=0;i<len2;i++){
+                if(j==len1){
+                    break;
+                }
+                while(j<len1){
+                    if(nums1[j]>nums2[i]){
+                        break;
+                    }
+                    else if(nums1[j]==nums2[i]){
+                        set.add(nums1[j]);
+                        j++;
+                        break;
+                    }else{
+                        j++;
+                    }
+                }
+            }
+        }
+        int len=set.size();
+        int[] reList=new int[len];
+        
+        int m=0;
+        for(int n:set){
+            reList[m]=n;
+            m++;
+        }
+        
+        return reList;
+        
+    }
+};
