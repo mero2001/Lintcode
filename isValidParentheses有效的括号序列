@@ -1,0 +1,90 @@
+public class Solution {
+    /*
+     * @param s: A string
+     * @return: whether the string is a valid parentheses
+     */
+    public boolean isValidParentheses(String s) {
+        // write your code here
+        int len=s.length();
+        if(s==null||len==0||len%2!=0){
+            return false;
+        }
+        
+        Stack<Character> stack=new Stack();
+        
+        for(int i=0;i<len;i++){
+            char ch=s.charAt(i);
+            if(ch=='('||ch=='{'||ch=='['){//将所有左括号压入栈中
+                stack.push(ch);
+            }else if(ch==')'){
+                if(stack.empty()||stack.peek()!='('){//当ch==右括号时，如果栈为空或者栈顶元素不为对应的左括号，则返回false
+                    return false;
+                }
+                stack.pop();
+            }else if(ch=='}'){
+                if(stack.empty()||stack.peek()!='{'){
+                    return false;
+                }
+                stack.pop();
+            }
+            else if(ch==']'){
+                if(stack.empty()||stack.peek()!='['){
+                    return false;
+                }
+                stack.pop();
+            }
+        }
+        if(!stack.empty()){//判断栈是否为空
+            return false;
+        }
+        return true;
+    }
+        
+        
+        
+        
+        /*char[] charArray;
+        charArray=s.toCharArray();
+        
+        
+        
+        int len=s.length();
+        char[] brackets={'{','}','[',']','(',')'};
+        
+        int index=0;
+        int leftcount=0;
+        int rightcount=0;
+        
+        for(int i=0;i<len;i++){
+            for(int j=0;j<6;j++){
+                if(charArray[i]==brackets[j]){
+                    if(j%2==0){
+                        if(j==index||j==index+2||j==index-2){
+                            return false;
+                        
+                        leftcount++;
+                        index=j;
+                        
+                    }else{
+                        if(leftcount==0){
+                            return false;
+                        }
+                        if(index%2==0&&j!=index+1){
+                            return false;
+                        }
+                        rightcount++;
+                        index=j;
+                    
+                    }
+                    break;
+                    
+                }
+            }
+        }
+        if(leftcount!=rightcount){
+            return false;
+        }
+        
+        return true;
+    }*/
+}
