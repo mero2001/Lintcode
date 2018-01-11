@@ -1,0 +1,42 @@
+public class Solution {
+    /*
+     * @param m: the number of eggs
+     * @param n: the number of floors
+     * @return: the number of drops in the worst case
+     */
+    public int dropEggs2(int m, int n) {
+        // write your code here
+        //定义动态规划二维矩阵,考虑为0的情况，所以需要各自+1
+        int[][] result=new int[m+1][n+1];
+        //初始化该二维矩阵边缘值
+        //当egg为0时，result全为0；当egg为1时，result即为floor数
+        for(int floor=0;floor<=n;floor++){
+            result[0][floor]=0;
+            result[1][floor]=floor;
+        }
+        //当floor为0时，result全为0；当floor为1时，result全为1
+        for(int egg=0;egg<=m;egg++){
+            result[egg][0]=0;
+            result[egg][1]=1;
+        }
+        //分析不同情况，建立二维数组元素之间的联系
+        for(int egg=2;egg<=m;egg++){
+            for(int floor=2;floor<=n;floor++){
+                int tmp=Integer.MAX_VALUE;
+                for(int drop=1;drop<=floor;drop++){//从第drop层扔鸡蛋的情况
+                    //如果鸡蛋破了
+                    int tmp1=result[egg-1][drop-1]+1;
+                    //如果鸡蛋没破
+                    int tmp2=result[egg][floor-drop]+1;
+                    //不知道鸡蛋是否会破，所以取最大值
+                    int condition=Math.max(tmp1,tmp2);
+                    //在整个for循环中取最小丢的次数
+                    tmp=Math.min(tmp,condition);
+                }
+                result[egg][floor]=tmp;
+            }
+        }
+        return result[m][n];
+    
+    }
+}
