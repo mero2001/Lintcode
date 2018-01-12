@@ -1,0 +1,64 @@
+public class Solution {
+    /*
+     * @param n: An integer
+     * @param str: a string with number from 1-n in random order and miss one number
+     * @return: An integer
+     */
+    public int findMissing2(int n, String str) {
+        // write your code here
+        int[] strArray=new int[10];//定义数组存放str中各数字出现的次数
+        int[] comArray=new int[10];//定义数组存放从1到n连起来的字符串中各数字出现的次数
+        
+        StringBuilder sb=new StringBuilder();//制作完整字符串
+        for(int i=1;i<=n;i++){
+            sb.append(i);
+        }
+        
+        int len=str.length();
+        
+        for(int i=0;i<len;i++){//48是‘0’的ASCII码
+            strArray[str.charAt(i)-48]+=1;//计算各数字出现的次数
+        }
+        for(int i=0;i<sb.length();i++){
+            comArray[sb.charAt(i)-48]+=1;
+        }
+
+        List<Integer> list=new ArrayList();
+        for(int i=0;i<=9;i++){//对两个数组做减法
+            if((comArray[i]-strArray[i])==1){
+                list.add(i);
+            }
+            if((comArray[i]-strArray[i])==2){
+                list.add(i);
+                list.add(i);
+            }
+        }
+
+        if(list.size()==1){//当两个数组只有一个数字出现次数不同时，直接返回该数字
+            return list.get(0);
+        }
+        int x=list.get(0);
+        int y=list.get(1);
+
+        
+        int tmp1=10*x+y;
+        int tmp2=x+10*y;
+        
+        if(tmp1>n){//分情况讨论当有两个数字不一样时
+            return tmp2;
+        }
+        if(tmp2>n){
+            return tmp1;
+        }
+        
+        if(str.indexOf(tmp1+"")==-1){//遇到121xxxxx且n>21的情况还是无法判断
+            return tmp1;
+        }
+        
+        
+        
+        return tmp2;
+        
+        
+    }
+}
