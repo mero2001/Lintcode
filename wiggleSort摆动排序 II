@@ -1,0 +1,114 @@
+public class Solution {
+    /*
+     * @param nums: A list of integers
+     * @return: nothing
+     */
+    public void wiggleSort(int[] nums) {
+        // write your code here
+        Arrays.sort(nums);//对nums进行排序
+        
+        int len=nums.length;//计算nums长度
+        int[] result=new int[len];
+        for(int i=0;i<len;i++){//将nums赋值给result，注意不能直接让result=nums，否则它们将指向同一个地址，同时被修改
+            result[i]=nums[i];
+        }
+        
+        /*if(len<2){
+            return;
+        }
+        if(len==2){
+            if(nums[0]>nums[1]){
+                int tmp=nums[0];
+                nums[0]=nums[1];
+                nums[1]=tmp;
+            }
+        }*/
+        int m=1;
+        int n=1;
+        if(len%2==0){//将result截成前后两段，从0到len-1，每次取每段最后一个数进行赋值，保证相同数字不会相邻。分长度len为奇偶讨论
+            for(int i=0;i<len;i++){
+                if(i%2==0){
+                    nums[i]=result[len/2-m];
+                    m++;
+                }
+                else if(i%2==1){
+                    nums[i]=result[len-n];
+                    n++;
+                }
+            }
+        }
+        if(len%2==1){
+            m=0;
+            for(int i=0;i<len;i++){
+                if(i%2==0){
+                    nums[i]=result[len/2-m];
+                    m++;
+                }
+                else if(i%2==1){
+                    nums[i]=result[len-n];
+                    n++;
+                }
+            }
+        }
+        
+        /*if(len%2==1){
+            int j=0;
+            for(int i=0;i<len;i++){
+                
+                result[j]=nums[i];
+                j=j+2;
+            }
+            j=1;
+            for(int i=len/2+1;i<len;i++){
+                result[j]=nums[i];
+                j=j+2;
+            }
+        }
+        if(len%2==0){
+            int j=0;
+            for(int i=0;i<len/2;i++){
+                result[j]=nums[i];
+                j=j+2;
+            }
+            j=1;
+            for(int i=len/2;i<len;i++){
+                result[j]=nums[i];
+                j=j+2;
+            }
+        }
+        for(int i=0;i<len;i++){
+            nums[i]=result[i];
+        }*/
+        
+        
+        /*for(int i=0;i<len-1;i++){
+            if(i%2==0&&nums[i]>=nums[i+1]){
+                int j=i;
+                while(j<len-1&&nums[j]>=nums[j+1]){
+                    
+                    j++;
+                }
+                for(;j>=i+1;j--){
+                    int tmp=nums[j];
+                    nums[j]=nums[j-1];
+                    nums[j-1]=tmp;
+                }
+                
+            }
+            
+            if(i%2==1&&nums[i]<=nums[i+1]){
+                int j=i;
+                while(j<len-1&&nums[j]<=nums[j+1]){
+                    
+                    j++;
+                }
+                for(;j>=i+1;j--){
+                    int tmp=nums[j];
+                    nums[j]=nums[j-1];
+                    nums[j-1]=tmp;
+                }
+                
+            } 
+        }*/
+    }
+}
