@@ -1,0 +1,38 @@
+public class Solution {
+    /*
+     * @param nums: An array of integers
+     * @return: An integer
+     */
+    public int findMissing(int[] nums) {
+        // write your code here
+        int len=nums.length;
+        Arrays.sort(nums);
+        if(nums[0]!=0){//判断缺少的数为0或为n
+            return 0;
+        }
+        if(nums[len-1]!=len){
+            return len;
+        }
+        
+        return findMissingTool(nums,0,len-1);
+    }
+    
+    public int findMissingTool(int[] nums, int start, int end){//二分递归查找
+        if(end-start==1){
+            return nums[start]+1;
+        }
+        int mid=(nums[start]+nums[end])/2;
+        int mid_index=start+(end-start+1)/2;
+        if(nums[mid_index]==mid){
+            start=mid_index;
+            end=end;
+            return findMissingTool(nums,start,end);
+        }
+        else if(nums[mid_index]>mid){
+            start=start;
+            end=mid_index;
+            return findMissingTool(nums,start,end);
+        }
+        return 0;
+    }
+};
