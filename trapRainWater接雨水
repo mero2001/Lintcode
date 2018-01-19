@@ -1,0 +1,45 @@
+public class Solution {
+    /*
+     * @param heights: a list of integers
+     * @return: a integer
+     */
+    public int trapRainWater(int[] heights) {
+        // write your code here
+        if(heights==null||heights.length==0){
+            return 0;
+        }
+        
+        int len=heights.length;
+        int lmax=heights[0];
+        int rmax=heights[len-1];
+        
+        int[] la=new int[len];
+        int[] ra=new int[len];
+        
+        for(int i=0;i<len;i++){//计算左边的最大值
+            if(lmax>=heights[i]){
+                la[i]=lmax;
+            }else{
+                la[i]=heights[i];
+                lmax=heights[i];
+            }
+        }
+        
+        for(int i=len-1;i>=0;i--){//计算右边的最大值
+            if(rmax>=heights[i]){
+                ra[i]=rmax;
+            }else{
+                ra[i]=heights[i];
+                rmax=heights[i];
+            }
+        }
+        
+        int sum=0;
+        for(int i=0;i<len;i++){//两边最大值的较低值减去该点的值即为雨水量
+            sum+=Math.min(la[i],ra[i])-heights[i];
+        }
+        
+        return sum;
+        
+    }
+}
