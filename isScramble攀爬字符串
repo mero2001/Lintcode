@@ -1,0 +1,45 @@
+public class Solution {
+    /*
+     * @param s1: A string
+     * @param s2: Another string
+     * @return: whether s2 is a scrambled string of s1
+     */
+    public boolean isScramble(String s1, String s2) {
+        // write your code here
+        int len1=s1.length();
+        int len2=s2.length();
+        
+        if(len1!=len2){
+            return false;
+        }
+        
+        if(len1==1){
+            return s1.equals(s2);
+        }
+        if(len1==2){
+            if(s1.charAt(0)==s2.charAt(1)&&s1.charAt(1)==s2.charAt(0)){
+                return true;
+            }
+            if(s1.equals(s2)){
+                return true;
+            }
+            return false;
+        }
+        //对于 字符串 s2 如果他是great的攀爬字符串 有两种状况：第一种 是与s1相同分割状态 并且，对应分割的子串 也是攀爬字符串，第二种 与 s1 相反分割状态，对应分割的子串 为 攀爬字符串。
+        for(int i=0;i<len1;i++){
+            String left1=s1.substring(0,i);
+            String left2=s2.substring(0,i);
+            String right1=s1.substring(i,len1);
+            String right2=s2.substring(i,len1);
+            String left2r=s2.substring(0,len1-i);
+            String right2r=s2.substring(len1-i,len1);
+            
+            if((isScramble(left1,left2)&&isScramble(right1,right2))||isScramble(left1,right2r)&&isScramble(right1,left2r)){
+                return true;
+            }
+            
+        }
+        return false;
+        
+    }
+}
