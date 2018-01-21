@@ -1,0 +1,42 @@
+public class Solution {
+    /*
+     * @param nums: A list of integer
+     * @return: An integer, maximum coins
+     */
+    public int maxCoins(int[] nums) {
+        // write your code here
+        int n=nums.length;
+        
+        int[] num=new int[n+2];//定义一个数组往原数组两边插入1
+        num[0]=1;
+        num[n+1]=1;
+        for(int i=1;i<n+1;i++){//给新数组赋值
+            num[i]=nums[i-1];
+        }
+        int[][] dp=new int[n+2][n+2];
+        int[][] visit=new int[n+2][n+2];
+        
+        int result=search(dp,visit,num,1,n);
+        return result;
+        
+    }
+    
+    public int search(int[][] dp, int[][] visit, int[]num, int start, int end){//如果第i个数为最后吹爆的气球，则其数值为1*num[i]*1+i左边的分数和i右边的分数
+        if(visit[start][end]==1){//***************************************
+            return dp[start][end];
+        }
+        
+        int res=0;
+        for(int i=start;i<=end;i++){
+            int mid=num[start-1]*num[i]*num[end+1];
+            int right=search(dp,visit,num,start,i-1);
+            int left=search(dp,visit,num,i+1,end);
+            res=Math.max(res,mid+right+left);
+        }
+        
+        visit[start][end]=1;//***************************************
+        dp[start][end]=res;
+        
+        return res;
+    }
+}
